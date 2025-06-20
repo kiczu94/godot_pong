@@ -1,3 +1,4 @@
+using System.Linq;
 using Godot;
 using pong_1.Scripts.EventBus;
 using pong_1.Scripts.Events;
@@ -8,37 +9,61 @@ public partial class Ball : CharacterBody2D
     [Export]
     public float Speed { get; set; } = 500f;
 
-    int directionX;
-    int directionY;
+    private int directionX;
 
-    EventBinding<BallHitWallEvent> ballHitWallEventBinding;
+    private int directionY;
+
+    private bool isStopped = false;
+
+    private EventBinding<BallHitWallEvent> ballHitWallEventBinding;
+
+    private EventBinding<BallHitLoseAreaEvent> ballHitLoseAreaEventBinding;
+
 
     public override void _Ready()
     {
-        base._Ready();
         ballHitWallEventBinding = new EventBinding<BallHitWallEvent>(OnBallHitWallEvent);
         EventBus<BallHitWallEvent>.Register(ballHitWallEventBinding);
+        ballHitLoseAreaEventBinding = new EventBinding<BallHitLoseAreaEvent>(OnBallHitLoseAreaEvent);
+        EventBus<BallHitLoseAreaEvent>.Register(ballHitLoseAreaEventBinding);
         directionX = RandomGenerator<int>.PickRandom(-1, 1);
         directionY = RandomGenerator<int>.PickRandom(-1, 1);
+        base._Ready();
     }
 
     public override void _PhysicsProcess(double delta)
     {
-        Velocity = new Vector2(Speed * directionX, Speed * directionY);
-        var collision = MoveAndCollide(Velocity * (float)delta);
-        if (collision != null)
-        {
-            var colliderGroups = collision.GetColliderGroup();
-            var colliderId = collision.GetColliderId();
-            var instance = InstanceFromId(colliderId);
-            
-            EventBus<BallHitWallEvent>.Raise(new BallHitWallEvent(Velocity));
-        }
+        ProcessMovement();
+        ProcessCollision(MoveAndCollide(Velocity * (float)delta));
     }
 
-    private void OnBallHitWallEvent(BallHitWallEvent @event)
+    private void ProcessMovement()
     {
-        directionY *= -1;
+        if (isStopped) return;
+        Velocity = new Vector2(Speed * directionX, Speed * directionY);
     }
 
+    private void ProcessCollision(KinematicCollision2D collision2D)
+    {
+        if (collision2D == null)
+        {
+            return;
+        }
+        var colliderGroups = this.GetColliderGroups(collision2D);
+        if (colliderGroups.ToList().Contains("Wall"))
+            EventBus<BallHitWallEvent>.Raise(new BallHitWallEvent(Velocity));
+    }
+
+    private void OnBallHitWallEvent(BallHitWallEvent @event) => directionY *= -1;
+
+    private void OnBallHitLoseAreaEvent(BallHitLoseAreaEvent @event)
+    {
+        isStopped = true;
+        Velocity = Vector2.Zero;
+        SetPositionToCenter();
+    }
+    private void SetPositionToCenter()
+    {
+        Position = new Vector2(576, 324);
+    }
 }
