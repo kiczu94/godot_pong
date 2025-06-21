@@ -14,7 +14,10 @@ public partial class LoseArea : Area2D
 
     public void OnBodyEntered(Node2D body)
     {
-        EventBus<BallHitLoseAreaEvent>.Raise(new BallHitLoseAreaEvent(IsLeft));
+        if (body is Ball)
+        {
+            EventBus<BallHitLoseAreaEvent>.Raise(new BallHitLoseAreaEvent(IsLeft));
+        }        
     }
 
 }

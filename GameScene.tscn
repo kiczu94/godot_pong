@@ -1,48 +1,46 @@
-[gd_scene load_steps=7 format=3 uid="uid://bm8w2rafydx18"]
+[gd_scene load_steps=8 format=3 uid="uid://bm8w2rafydx18"]
 
-[ext_resource type="Texture2D" uid="uid://c1alsgvx0gu7c" path="res://Assets/Background.png" id="1_k77ap"]
+[ext_resource type="PackedScene" uid="uid://ce7mmlbrhlvla" path="res://Board.tscn" id="1_hvuor"]
 [ext_resource type="PackedScene" uid="uid://naepir5mexdi" path="res://Wall.tscn" id="2_haeiw"]
 [ext_resource type="PackedScene" uid="uid://bj6nlkuq0xbuf" path="res://Ball.tscn" id="3_haeiw"]
 [ext_resource type="PackedScene" uid="uid://cbxw24iayvmvb" path="res://LoseArea.tscn" id="4_b5kf5"]
-[ext_resource type="Script" uid="uid://bx7bixrbwwxx6" path="res://ScoreLabel.cs" id="5_hvuor"]
+[ext_resource type="Script" uid="uid://bx7bixrbwwxx6" path="res://Scripts/ScoreLabel.cs" id="5_hvuor"]
+[ext_resource type="PackedScene" uid="uid://dag8pocn63nfn" path="res://Player.tscn" id="6_i2arf"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_i2arf"]
 font_size = 30
 
 [node name="GameScene" type="Node2D"]
 
-[node name="Background" type="Parallax2D" parent="."]
-
-[node name="BackgroundSprite" type="Sprite2D" parent="Background"]
-position = Vector2(575.875, 324)
-scale = Vector2(1.32595, 0.472303)
-texture = ExtResource("1_k77ap")
+[node name="Board" parent="." instance=ExtResource("1_hvuor")]
+scroll_offset = Vector2(-2, 2)
 
 [node name="WallUp" parent="." groups=["Wall"] instance=ExtResource("2_haeiw")]
+visibility_layer = 2
+position = Vector2(0, 50)
 
 [node name="WallDown" parent="." groups=["Wall"] instance=ExtResource("2_haeiw")]
-position = Vector2(0, 646)
+position = Vector2(0, 596)
 
 [node name="Ball" parent="." instance=ExtResource("3_haeiw")]
 position = Vector2(576, 324)
 
 [node name="LeftLoseArea" parent="." instance=ExtResource("4_b5kf5")]
-visible = false
 position = Vector2(10, 11)
 IsLeft = true
 
 [node name="RightLoseArea" parent="." instance=ExtResource("4_b5kf5")]
-visible = false
 position = Vector2(1162, 10)
 
 [node name="Label" type="Label" parent="."]
-offset_left = 546.0
-offset_top = 24.0
-offset_right = 604.0
-offset_bottom = 82.0
+offset_left = 542.0
+offset_right = 600.0
+offset_bottom = 58.0
 size_flags_horizontal = 4
 text = "0 : 0"
 label_settings = SubResource("LabelSettings_i2arf")
 horizontal_alignment = 1
 vertical_alignment = 1
 script = ExtResource("5_hvuor")
+
+[node name="Player1" parent="." instance=ExtResource("6_i2arf")]

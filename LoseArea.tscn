@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://cbxw24iayvmvb"]
 
-[ext_resource type="Script" uid="uid://dnalrtuke602y" path="res://LoseArea.cs" id="1_s3r6q"]
+[ext_resource type="Script" uid="uid://dnalrtuke602y" path="res://Scripts/LoseArea.cs" id="1_s3r6q"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kgq32"]
 size = Vector2(0, 639)

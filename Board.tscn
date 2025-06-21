@@ -1,0 +1,55 @@
+[gd_scene load_steps=4 format=3 uid="uid://ce7mmlbrhlvla"]
+
+[ext_resource type="Texture2D" uid="uid://c1alsgvx0gu7c" path="res://Assets/Background.png" id="1_3ng4l"]
+[ext_resource type="Texture2D" uid="uid://biukuhbbnm6nr" path="res://Assets/Divider.png" id="2_otxgx"]
+[ext_resource type="Script" uid="uid://5ym8px6eisc0" path="res://Scripts/Divider.cs" id="3_otxgx"]
+
+[node name="Background" type="Parallax2D"]
+
+[node name="BackgroundSprite" type="Sprite2D" parent="."]
+position = Vector2(575.875, 324)
+scale = Vector2(1.32595, 0.472303)
+texture = ExtResource("1_3ng4l")
+
+[node name="Divider1" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.411765)
+visibility_layer = 2
+position = Vector2(576, 90.063)
+scale = Vector2(0.230001, 0.303572)
+texture = ExtResource("2_otxgx")
+script = ExtResource("3_otxgx")
+
+[node name="Divider2" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.411765)
+visibility_layer = 2
+position = Vector2(576, 180)
+scale = Vector2(0.26, 0.304113)
+texture = ExtResource("2_otxgx")
+
+[node name="Divider3" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.411765)
+visibility_layer = 2
+position = Vector2(576, 270)
+scale = Vector2(0.26, 0.304113)
+texture = ExtResource("2_otxgx")
+
+[node name="Divider4" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.411765)
+visibility_layer = 3
+position = Vector2(576, 360)
+scale = Vector2(0.26, 0.304113)
+texture = ExtResource("2_otxgx")
+
+[node name="Divider5" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.411765)
+visibility_layer = 2
+position = Vector2(576, 450)
+scale = Vector2(0.26, 0.304113)
+texture = ExtResource("2_otxgx")
+
+[node name="Divider6" type="Sprite2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.411765)
+visibility_layer = 2
+position = Vector2(576, 540)
+scale = Vector2(0.26, 0.304113)
+texture = ExtResource("2_otxgx")
