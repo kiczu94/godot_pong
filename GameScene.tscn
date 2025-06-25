@@ -22,7 +22,7 @@ position = Vector2(0, 50)
 [node name="WallDown" parent="." groups=["Wall"] instance=ExtResource("2_haeiw")]
 position = Vector2(0, 596)
 
-[node name="Ball" parent="." instance=ExtResource("3_haeiw")]
+[node name="Ball" parent="." groups=["Ball"] instance=ExtResource("3_haeiw")]
 position = Vector2(576, 324)
 
 [node name="LeftLoseArea" parent="." instance=ExtResource("4_b5kf5")]

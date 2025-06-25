@@ -10,15 +10,13 @@ public partial class Ball : CharacterBody2D
     [Export]
     public float Speed { get; set; } = 10f;
 
-    private int directionX;
+    private int directionX = -1;
 
-    private int directionY;
+    private int directionY = 1;
 
     private bool isStopped = false;
 
-    private float angleX;
-
-    private float angleY;
+    private float angle;
 
     private EventBinding<BallHitWallEvent> ballHitWallEventBinding;
 
@@ -52,16 +50,13 @@ public partial class Ball : CharacterBody2D
 
     private void SetBallMovementData()
     {
-        directionX = RandomGenerator<int>.PickRandom(-1, 1);
-        directionY = RandomGenerator<int>.PickRandom(-1, 1);
-        angleX = Mathf.DegToRad(45);
-        angleY = Mathf.DegToRad(45);
+        angle = Mathf.DegToRad(45);
     }
 
     private void ProcessMovement()
     {
         if (isStopped) return;
-        Velocity = new Vector2(Speed * directionX * angleX, Speed * directionY * angleY);
+        Velocity = new Vector2(Speed * directionX, Speed * directionY) * Vector2.FromAngle(angle);
     }
 
     private void ProcessCollision(KinematicCollision2D collision2D)
@@ -70,11 +65,16 @@ public partial class Ball : CharacterBody2D
         {
             return;
         }
-        var colliderGroups = this.GetColliderGroups(collision2D).ToList();
-        if (colliderGroups.Contains("Wall"))
+        var colliderNode = this.GetColliderNode(collision2D);
+        var colliderGroup = colliderNode.GetGroups().Single();
+        if (colliderGroup == "Wall")
             EventBus<BallHitWallEvent>.Raise(new BallHitWallEvent(Velocity));
-        if (colliderGroups.Contains("Player"))
-            EventBus<BallHitPlayerEvent>.Raise(new BallHitPlayerEvent());
+        if (colliderGroup == "Player")
+        {
+            var player = GetNode<CharacterBody2D>(this.GetColliderPath(collision2D)) as Player;
+            var dupa =player.playerCollisionShape;
+        }
+            
     }
 
     private void OnBallHitWallEvent(BallHitWallEvent @event) => directionY *= -1;
@@ -85,10 +85,23 @@ public partial class Ball : CharacterBody2D
         Velocity = Vector2.Zero;
         SetPositionToCenter();
     }
-    private void OnBallHitPlayerEvent(BallHitPlayerEvent @event) => directionX *= -1;
+    private void OnBallHitPlayerEvent(BallHitPlayerEvent @event)
+    {
+        directionX *= -1;
+        Speed *= 1.05f;
+        Velocity = CalculateNewVelocity();
+    }
 
     private void SetPositionToCenter()
     {
         Position = new Vector2(576, 324);
+    }
+
+    private Vector2 CalculateNewVelocity()
+    {
+        var velocityWithHigherSpeed = new Vector2(Speed * directionX, Speed * directionY) * Vector2.FromAngle(this.angle);
+        var speedWithChangedAngle = velocityWithHigherSpeed / Vector2.FromAngle(Mathf.DegToRad(30));
+        return speedWithChangedAngle * Vector2.FromAngle(Mathf.DegToRad(30));
+
     }
 }

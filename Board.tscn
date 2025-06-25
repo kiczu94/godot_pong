@@ -1,8 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://ce7mmlbrhlvla"]
+[gd_scene load_steps=3 format=3 uid="uid://ce7mmlbrhlvla"]
 
 [ext_resource type="Texture2D" uid="uid://c1alsgvx0gu7c" path="res://Assets/Background.png" id="1_3ng4l"]
 [ext_resource type="Texture2D" uid="uid://biukuhbbnm6nr" path="res://Assets/Divider.png" id="2_otxgx"]
-[ext_resource type="Script" uid="uid://5ym8px6eisc0" path="res://Scripts/Divider.cs" id="3_otxgx"]
 
 [node name="Background" type="Parallax2D"]
 
@@ -17,7 +16,6 @@ visibility_layer = 2
 position = Vector2(576, 90.063)
 scale = Vector2(0.230001, 0.303572)
 texture = ExtResource("2_otxgx")
-script = ExtResource("3_otxgx")
 
 [node name="Divider2" type="Sprite2D" parent="."]
 self_modulate = Color(1, 1, 1, 0.411765)
