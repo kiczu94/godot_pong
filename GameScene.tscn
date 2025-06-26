@@ -44,3 +44,4 @@ vertical_alignment = 1
 script = ExtResource("5_hvuor")
 
 [node name="Player1" parent="." instance=ExtResource("6_i2arf")]
+position = Vector2(40, 317)

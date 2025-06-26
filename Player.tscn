@@ -10,10 +10,8 @@ size = Vector2(10, 124.494)
 script = ExtResource("1_kpjcp")
 
 [node name="PlayerSprite" type="Sprite2D" parent="."]
-position = Vector2(30, 323.75)
-scale = Vector2(0.5, 0.498)
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("2_kne1u")
 
 [node name="PlayerCollisionShape" type="CollisionShape2D" parent="."]
-position = Vector2(30, 323.753)
 shape = SubResource("RectangleShape2D_1kil2")

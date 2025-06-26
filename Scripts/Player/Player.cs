@@ -1,22 +1,19 @@
 using Godot;
-using pong_1.Scripts.EventBus;
-using pong_1.Scripts.Events;
-using pong_1.Scripts.Utilities;
-using Pong_1.Scripts.Events;
-using System.Linq;
+using Pong_1.Scripts.Utilities;
 
 public partial class Player : CharacterBody2D
 {
     [Export]
     public float Speed { get; set; } = 150;
 
-    public CollisionShape2D playerCollisionShape;
-    private Sprite2D playerSprite;
+    public float EffectiveSpriteHeight { get; set; }
+
+    private CollisionShape2D playerCollisionShape;
 
     public override void _Ready()
     {
         playerCollisionShape = GetNode<CollisionShape2D>("PlayerCollisionShape");
-        playerSprite = GetNode<Sprite2D>("PlayerSprite");
+        EffectiveSpriteHeight = GetNode<Sprite2D>("PlayerSprite").GetEffectiveTextureHeight();
         base._Ready();
     }
 
@@ -33,21 +30,8 @@ public partial class Player : CharacterBody2D
             Velocity = new Vector2(0, Speed);
         }
 
-        var collision = MoveAndCollide(Velocity * (float)delta);
-
-        ProcessCollision(collision);
+        MoveAndSlide();
 
         base._PhysicsProcess(delta);
-    }
-
-    private void ProcessCollision(KinematicCollision2D collision2D)
-    {
-        if (collision2D == null)
-        {
-            return;
-        }
-        var colliderGroups = this.GetColliderGroups(collision2D);
-        if (colliderGroups.Contains("Ball"))
-            EventBus<BallHitPlayerEvent>.Raise(new BallHitPlayerEvent(collision2D.GetPosition().Y, playerSprite.Texture.GetHeight(), this.Position.Y));
     }
 }

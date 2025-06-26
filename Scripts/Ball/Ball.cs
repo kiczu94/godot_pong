@@ -3,12 +3,13 @@ using pong_1.Scripts.EventBus;
 using pong_1.Scripts.Events;
 using pong_1.Scripts.Utilities;
 using Pong_1.Scripts.Events;
+using Pong_1.Scripts.Utilities;
 using System.Linq;
 
 public partial class Ball : CharacterBody2D
 {
     [Export]
-    public float Speed { get; set; } = 10f;
+    public float Speed { get; set; } = 100f;
 
     private int directionX = -1;
 
@@ -28,7 +29,7 @@ public partial class Ball : CharacterBody2D
     public override void _Ready()
     {
         SetBindings();
-        SetBallMovementData();
+        SetStartingMovementData();
         base._Ready();
     }
 
@@ -48,9 +49,11 @@ public partial class Ball : CharacterBody2D
         EventBus<BallHitPlayerEvent>.Register(ballHitPlayerEventBinding);
     }
 
-    private void SetBallMovementData()
+    private void SetStartingMovementData()
     {
         angle = Mathf.DegToRad(45);
+        directionX = RandomGenerator<int>.PickRandom([1, -1]);
+        directionY = RandomGenerator<int>.PickRandom([1, -1]);
     }
 
     private void ProcessMovement()
@@ -67,14 +70,19 @@ public partial class Ball : CharacterBody2D
         }
         var colliderNode = this.GetColliderNode(collision2D);
         var colliderGroup = colliderNode.GetGroups().Single();
+
         if (colliderGroup == "Wall")
+        {
             EventBus<BallHitWallEvent>.Raise(new BallHitWallEvent(Velocity));
+        }
+
         if (colliderGroup == "Player")
         {
             var player = GetNode<CharacterBody2D>(this.GetColliderPath(collision2D)) as Player;
-            var dupa =player.playerCollisionShape;
+            EventBus<BallHitPlayerEvent>
+                .Raise(new BallHitPlayerEvent(collision2D.GetPosition().Y, player.EffectiveSpriteHeight, player.GlobalPosition.Y));
         }
-            
+
     }
 
     private void OnBallHitWallEvent(BallHitWallEvent @event) => directionY *= -1;
@@ -87,9 +95,7 @@ public partial class Ball : CharacterBody2D
     }
     private void OnBallHitPlayerEvent(BallHitPlayerEvent @event)
     {
-        directionX *= -1;
-        Speed *= 1.05f;
-        Velocity = CalculateNewVelocity();
+        Velocity = CalculateNewVelocity(@event);
     }
 
     private void SetPositionToCenter()
@@ -97,11 +103,54 @@ public partial class Ball : CharacterBody2D
         Position = new Vector2(576, 324);
     }
 
-    private Vector2 CalculateNewVelocity()
+    private Vector2 CalculateNewVelocity(BallHitPlayerEvent @event)
     {
-        var velocityWithHigherSpeed = new Vector2(Speed * directionX, Speed * directionY) * Vector2.FromAngle(this.angle);
-        var speedWithChangedAngle = velocityWithHigherSpeed / Vector2.FromAngle(Mathf.DegToRad(30));
-        return speedWithChangedAngle * Vector2.FromAngle(Mathf.DegToRad(30));
+        var hitPlayerSegment = GetSegmentNumber(@event);
+        var reflectionAngle = GetReflectionAngle(hitPlayerSegment);
+        var newYDirection = GetReflectedYDirection(hitPlayerSegment);
+        var newSpeed = GetNewSpeed(reflectionAngle);
 
+        UpdateMovementData(reflectionAngle, newYDirection);
+        
+        return new Vector2(newSpeed.X * directionX, newSpeed.Y * directionY) * Vector2.FromAngle(angle);
+    }
+
+    private int GetSegmentNumber(BallHitPlayerEvent @event)
+    {
+        var playerSegmentHeight = @event.playerHeight / 9; //just to easy divide 45 degrees
+        var diff = @event.playerPosition - @event.collisionY;
+        
+        return (int)Mathf.Round(diff / playerSegmentHeight);
+    }
+
+    private float GetReflectionAngle(int playerSegmentNumber) => playerSegmentNumber switch
+    {
+        0 => Mathf.DegToRad(5),
+        1 or -1 => Mathf.DegToRad(15),
+        2 or -2 => Mathf.DegToRad(25),
+        3 or -3 => Mathf.DegToRad(35),
+        4 or -4 => Mathf.DegToRad(45),
+        _ => Mathf.DegToRad(5),
+    };
+
+    private int GetReflectedYDirection(int playerSegmentNumber) => playerSegmentNumber switch
+    {
+        >= 0 => -1,
+        _ => 1
+    };
+
+    private Vector2 GetNewSpeed(float reflectionAngle)
+    {
+        Speed *= 1.1f;
+        var velocityWithHigherSpeed = new Vector2(Speed * directionX, Speed * directionY) * Vector2.FromAngle(this.angle);
+        
+        return  velocityWithHigherSpeed / Vector2.FromAngle(reflectionAngle);
+    }
+
+    private void UpdateMovementData(float reflectionAngle, int newYDirection)
+    {
+        directionX *= -1;
+        angle = reflectionAngle;
+        directionY = newYDirection;
     }
 }
