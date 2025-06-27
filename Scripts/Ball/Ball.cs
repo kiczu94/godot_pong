@@ -3,13 +3,12 @@ using pong_1.Scripts.EventBus;
 using pong_1.Scripts.Events;
 using pong_1.Scripts.Utilities;
 using Pong_1.Scripts.Events;
-using Pong_1.Scripts.Utilities;
 using System.Linq;
 
 public partial class Ball : CharacterBody2D
 {
     [Export]
-    public float Speed { get; set; } = 100f;
+    public float Speed { get; set; }
 
     private int directionX = -1;
 
@@ -19,11 +18,15 @@ public partial class Ball : CharacterBody2D
 
     private float angle;
 
+    private float _speed;
+
     private EventBinding<BallHitWallEvent> ballHitWallEventBinding;
 
     private EventBinding<BallHitLoseAreaEvent> ballHitLoseAreaEventBinding;
 
     private EventBinding<BallHitPlayerEvent> ballHitPlayerEventBinding;
+
+    private EventBinding<StartGameEvent> startGameEventBinding;
 
 
     public override void _Ready()
@@ -47,19 +50,22 @@ public partial class Ball : CharacterBody2D
         EventBus<BallHitLoseAreaEvent>.Register(ballHitLoseAreaEventBinding);
         ballHitPlayerEventBinding = new EventBinding<BallHitPlayerEvent>(OnBallHitPlayerEvent);
         EventBus<BallHitPlayerEvent>.Register(ballHitPlayerEventBinding);
+        startGameEventBinding = new EventBinding<StartGameEvent>(OnStartGameEvent);
+        EventBus<StartGameEvent>.Register(startGameEventBinding);
     }
 
     private void SetStartingMovementData()
     {
-        angle = Mathf.DegToRad(45);
-        directionX = RandomGenerator<int>.PickRandom([1, -1]);
-        directionY = RandomGenerator<int>.PickRandom([1, -1]);
+        angle = Mathf.DegToRad(RandomGenerator<int>.PickRandom(5,10,15,20,25,30,35,40,45));
+        directionX = RandomGenerator<int>.PickRandom(1, -1);
+        directionY = RandomGenerator<int>.PickRandom(1, -1);
+        _speed = Speed;
     }
 
     private void ProcessMovement()
     {
-        if (isStopped) return;
-        Velocity = new Vector2(Speed * directionX, Speed * directionY) * Vector2.FromAngle(angle);
+        if (_speed == 0) return;
+        Velocity = new Vector2(_speed * directionX, _speed * directionY) * Vector2.FromAngle(angle);
     }
 
     private void ProcessCollision(KinematicCollision2D collision2D)
@@ -89,13 +95,17 @@ public partial class Ball : CharacterBody2D
 
     private void OnBallHitLoseAreaEvent(BallHitLoseAreaEvent @event)
     {
-        isStopped = true;
-        Velocity = Vector2.Zero;
+        _speed = 0;
         SetPositionToCenter();
     }
     private void OnBallHitPlayerEvent(BallHitPlayerEvent @event)
     {
         Velocity = CalculateNewVelocity(@event);
+    }
+
+    private void OnStartGameEvent()
+    {
+        SetStartingMovementData();
     }
 
     private void SetPositionToCenter()
@@ -141,8 +151,8 @@ public partial class Ball : CharacterBody2D
 
     private Vector2 GetNewSpeed(float reflectionAngle)
     {
-        Speed *= 1.1f;
-        var velocityWithHigherSpeed = new Vector2(Speed * directionX, Speed * directionY) * Vector2.FromAngle(this.angle);
+        _speed *= 1.1f;
+        var velocityWithHigherSpeed = new Vector2(_speed * directionX, _speed * directionY) * Vector2.FromAngle(this.angle);
         
         return  velocityWithHigherSpeed / Vector2.FromAngle(reflectionAngle);
     }
