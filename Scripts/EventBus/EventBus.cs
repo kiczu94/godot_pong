@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Godot;
 
 namespace pong_1.Scripts.EventBus;
@@ -17,6 +18,8 @@ public class EventBus<T> where T : IEvent
         {
             binding.onEvent.Invoke(@event);
             binding.onEventNoArgs.Invoke();
+            binding.onEventNoArgsAsync.Invoke();
+            binding.onEventAsync.Invoke(@event);
         }
     }
 

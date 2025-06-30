@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bm8w2rafydx18"]
+[gd_scene load_steps=13 format=3 uid="uid://bm8w2rafydx18"]
 
 [ext_resource type="PackedScene" uid="uid://ce7mmlbrhlvla" path="res://Board.tscn" id="1_hvuor"]
 [ext_resource type="PackedScene" uid="uid://naepir5mexdi" path="res://Wall.tscn" id="2_haeiw"]
@@ -7,14 +7,21 @@
 [ext_resource type="Script" uid="uid://bx7bixrbwwxx6" path="res://Scripts/ScoreLabel.cs" id="5_hvuor"]
 [ext_resource type="PackedScene" uid="uid://dag8pocn63nfn" path="res://Player.tscn" id="6_i2arf"]
 [ext_resource type="Script" uid="uid://bhbd7jvxoqvys" path="res://Scripts/RestartLabel.cs" id="7_1kil2"]
+[ext_resource type="Script" uid="uid://b2gpccggt8x7o" path="res://TimerLabel.cs" id="8_5cvvu"]
+[ext_resource type="Script" uid="uid://c0ivysp3qceav" path="res://GameOverLabel.cs" id="9_ed8b8"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_i2arf"]
 font_size = 30
 
+[sub_resource type="LabelSettings" id="LabelSettings_ed8b8"]
+font_size = 48
+
+[sub_resource type="LabelSettings" id="LabelSettings_l6ya2"]
+font_size = 32
+
 [node name="GameScene" type="Node2D"]
 
 [node name="Board" parent="." instance=ExtResource("1_hvuor")]
-scroll_offset = Vector2(33, 57)
 
 [node name="WallUp" parent="." groups=["Wall"] instance=ExtResource("2_haeiw")]
 visibility_layer = 2
@@ -25,7 +32,6 @@ position = Vector2(0, 596)
 
 [node name="Ball" parent="." groups=["Ball"] instance=ExtResource("3_haeiw")]
 position = Vector2(576, 324)
-Speed = 0.0
 
 [node name="LeftLoseArea" parent="." instance=ExtResource("4_b5kf5")]
 position = Vector2(10, 11)
@@ -50,7 +56,6 @@ script = ExtResource("5_hvuor")
 
 [node name="RestartLabel" type="Label" parent="."]
 visible = false
-anchors_preset = -1
 offset_left = 524.0
 offset_top = 149.0
 offset_right = 631.0
@@ -61,3 +66,40 @@ size_flags_horizontal = 4
 text = "Press Space
  to restart"
 script = ExtResource("7_1kil2")
+
+[node name="TimerLabel" type="Label" parent="."]
+visible = false
+custom_minimum_size = Vector2(10, 0)
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 542.0
+offset_top = 206.0
+offset_right = 607.0
+offset_bottom = 229.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "1"
+label_settings = SubResource("LabelSettings_ed8b8")
+horizontal_alignment = 1
+script = ExtResource("8_5cvvu")
+
+[node name="GameOverLabel" type="Label" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 147.0
+offset_top = 167.0
+offset_right = 1007.0
+offset_bottom = 325.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "GAME OVER 
+PLAYER 1 WON"
+label_settings = SubResource("LabelSettings_l6ya2")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("9_ed8b8")

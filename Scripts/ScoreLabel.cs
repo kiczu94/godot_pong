@@ -1,6 +1,7 @@
 using Godot;
 using pong_1.Scripts.EventBus;
 using pong_1.Scripts.Events;
+using Pong_1.Scripts.Events;
 
 public partial class ScoreLabel : Label
 {
@@ -28,5 +29,13 @@ public partial class ScoreLabel : Label
     {
         if (@event.leftArea) Player2Score += 1;
         else Player1Score += 1;
+        if (Player1Score == 10 || Player2Score == 10)
+        {
+            EventBus<GameFinishedEvent>.Raise(new GameFinishedEvent(Player1Score == 10 ? true : false));
+        }
+        else
+        {
+            EventBus<StopGameEvent>.Raise(new StopGameEvent());
+        }
     }
 }

@@ -8,7 +8,7 @@ using System.Linq;
 public partial class Ball : CharacterBody2D
 {
     [Export]
-    public float Speed { get; set; }
+    public float Speed { get; set; } = 100;
 
     private int directionX = -1;
 
@@ -64,7 +64,11 @@ public partial class Ball : CharacterBody2D
 
     private void ProcessMovement()
     {
-        if (_speed == 0) return;
+        if (_speed == 0)
+        {
+            Velocity = Vector2.Zero;
+            return;
+        }
         Velocity = new Vector2(_speed * directionX, _speed * directionY) * Vector2.FromAngle(angle);
     }
 
