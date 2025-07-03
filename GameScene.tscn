@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://bm8w2rafydx18"]
+[gd_scene load_steps=15 format=3 uid="uid://bm8w2rafydx18"]
 
 [ext_resource type="PackedScene" uid="uid://ce7mmlbrhlvla" path="res://Board.tscn" id="1_hvuor"]
 [ext_resource type="PackedScene" uid="uid://naepir5mexdi" path="res://Wall.tscn" id="2_haeiw"]
@@ -6,9 +6,16 @@
 [ext_resource type="PackedScene" uid="uid://cbxw24iayvmvb" path="res://LoseArea.tscn" id="4_b5kf5"]
 [ext_resource type="Script" uid="uid://bx7bixrbwwxx6" path="res://Scripts/ScoreLabel.cs" id="5_hvuor"]
 [ext_resource type="PackedScene" uid="uid://dag8pocn63nfn" path="res://Player.tscn" id="6_i2arf"]
+[ext_resource type="Script" uid="uid://cpcfvnjyoqkni" path="res://Scripts/Player/Player1Movement.cs" id="6_l6ya2"]
 [ext_resource type="Script" uid="uid://bhbd7jvxoqvys" path="res://Scripts/RestartLabel.cs" id="7_1kil2"]
 [ext_resource type="Script" uid="uid://b2gpccggt8x7o" path="res://TimerLabel.cs" id="8_5cvvu"]
 [ext_resource type="Script" uid="uid://c0ivysp3qceav" path="res://GameOverLabel.cs" id="9_ed8b8"]
+
+[sub_resource type="Resource" id="Resource_oieil"]
+script = ExtResource("6_l6ya2")
+Speed = 150.0
+Speed = 150.0
+metadata/_custom_type_script = "uid://cpcfvnjyoqkni"
 
 [sub_resource type="LabelSettings" id="LabelSettings_i2arf"]
 font_size = 30
@@ -42,10 +49,11 @@ position = Vector2(1162, 10)
 
 [node name="Player1" parent="." instance=ExtResource("6_i2arf")]
 position = Vector2(40, 317)
+PlayerMovement = SubResource("Resource_oieil")
 
 [node name="ScoreLabel" type="Label" parent="."]
-offset_left = 542.0
-offset_right = 600.0
+offset_left = 547.0
+offset_right = 605.0
 offset_bottom = 58.0
 size_flags_horizontal = 4
 text = "0 : 0"

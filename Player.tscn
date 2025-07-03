@@ -8,6 +8,7 @@ size = Vector2(10, 124.494)
 
 [node name="Player1" type="CharacterBody2D" groups=["Player"]]
 script = ExtResource("1_kpjcp")
+metadata/PlayerMovement = null
 
 [node name="PlayerSprite" type="Sprite2D" parent="."]
 scale = Vector2(0.5, 0.5)

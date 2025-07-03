@@ -2,13 +2,14 @@ using Godot;
 using pong_1.Scripts.EventBus;
 using pong_1.Scripts.Events;
 using Pong_1.Scripts.Events;
+using Pong_1.Scripts.Player;
 using Pong_1.Scripts.Utilities;
 
 public partial class Player : CharacterBody2D
 {
     [Export]
-    public float Speed { get; set; } = 150;
-
+    public PlayerMovement PlayerMovement { get; set; }
+    
     public float EffectiveSpriteHeight { get; set; }
 
     private CollisionShape2D playerCollisionShape;
@@ -20,6 +21,7 @@ public partial class Player : CharacterBody2D
     private EventBinding<StartGameEvent> startGameEventBinding;
 
     private EventBinding<RestartPointEvent> restartPointEventBinding;
+
 
     public override void _Ready()
     {
@@ -36,16 +38,7 @@ public partial class Player : CharacterBody2D
 
     public override void _PhysicsProcess(double delta)
     {
-        Velocity = Vector2.Zero;
-        if (Input.IsKeyPressed(Key.W))
-        {
-            Velocity = new Vector2(0, -Speed);
-        }
-
-        if (Input.IsKeyPressed(Key.S))
-        {
-            Velocity = new Vector2(0, Speed);
-        }
+        Velocity = PlayerMovement.GetVelocity();
 
         MoveAndSlide();
 
@@ -55,13 +48,13 @@ public partial class Player : CharacterBody2D
     private void OnBallHitLoseAreaEventBiding()
     {
         isBallMoving = false;
-        Speed = 0;
+        PlayerMovement.Speed = 0;
     }
 
     private void OnStartGameEventBinding()
     {
         isBallMoving = true;
-        Speed = 150;
+        PlayerMovement.Speed = 150;
     }
 
     private void OnRestartPointEvent(RestartPointEvent @event)

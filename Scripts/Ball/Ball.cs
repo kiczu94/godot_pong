@@ -28,6 +28,7 @@ public partial class Ball : CharacterBody2D
 
     private EventBinding<StartGameEvent> startGameEventBinding;
 
+    private EventBinding<RestartPointEvent> restartPointEventBinding;
 
     public override void _Ready()
     {
@@ -52,6 +53,8 @@ public partial class Ball : CharacterBody2D
         EventBus<BallHitPlayerEvent>.Register(ballHitPlayerEventBinding);
         startGameEventBinding = new EventBinding<StartGameEvent>(OnStartGameEvent);
         EventBus<StartGameEvent>.Register(startGameEventBinding);
+        restartPointEventBinding = new EventBinding<RestartPointEvent> (OnRestartPointEvent);
+        EventBus<RestartPointEvent>.Register(restartPointEventBinding);
     }
 
     private void SetStartingMovementData()
@@ -100,7 +103,6 @@ public partial class Ball : CharacterBody2D
     private void OnBallHitLoseAreaEvent(BallHitLoseAreaEvent @event)
     {
         _speed = 0;
-        SetPositionToCenter();
     }
     private void OnBallHitPlayerEvent(BallHitPlayerEvent @event)
     {
@@ -110,6 +112,11 @@ public partial class Ball : CharacterBody2D
     private void OnStartGameEvent()
     {
         SetStartingMovementData();
+    }
+
+    private void OnRestartPointEvent()
+    {
+        SetPositionToCenter();
     }
 
     private void SetPositionToCenter()

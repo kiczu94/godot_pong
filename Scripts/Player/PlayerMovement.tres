@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="PlayerMovement" load_steps=2 format=3 uid="uid://pyfxlw6dplew"]
+
+[ext_resource type="Script" uid="uid://c3eoq5hnbl7vo" path="res://Scripts/Player/PlayerMovement.cs" id="1_3waaf"]
+
+[resource]
+script = ExtResource("1_3waaf")
+Speed = 150.0
+metadata/_custom_type_script = "uid://c3eoq5hnbl7vo"
