@@ -11,9 +11,8 @@ config_version=5
 [application]
 
 config/name="Pong_1"
-run/main_scene="res://GameScene.tscn"
+run/main_scene="uid://dyq7l7xoglyix"
 config/features=PackedStringArray("4.4", "C#", "Forward Plus")
-config/icon="res://icon.svg"
 
 [autoload]
 

@@ -1,0 +1,40 @@
+[gd_scene load_steps=8 format=3 uid="uid://bm8w2rafydx18"]
+
+[ext_resource type="PackedScene" uid="uid://ce7mmlbrhlvla" path="res://Levels/GameLevel/Board.tscn" id="1_hvuor"]
+[ext_resource type="PackedScene" uid="uid://naepir5mexdi" path="res://Entities/Wall/Wall.tscn" id="2_haeiw"]
+[ext_resource type="PackedScene" uid="uid://bj6nlkuq0xbuf" path="res://Entities/Ball/Ball.tscn" id="3_haeiw"]
+[ext_resource type="PackedScene" uid="uid://cbxw24iayvmvb" path="res://Levels/GameLevel/LoseArea.tscn" id="4_b5kf5"]
+[ext_resource type="PackedScene" uid="uid://blaq6c0hno86p" path="res://UI/UI.tscn" id="6_1kil2"]
+[ext_resource type="PackedScene" uid="uid://dag8pocn63nfn" path="res://Entities/Player/Player.tscn" id="6_i2arf"]
+[ext_resource type="PackedScene" uid="uid://vr05p2h8eunt" path="res://Entities/Opponent/Opponent.tscn" id="7_1kil2"]
+
+[node name="GameScene" type="Node2D"]
+
+[node name="Board" parent="." instance=ExtResource("1_hvuor")]
+ShowDividers = true
+
+[node name="WallUp" parent="." groups=["Wall"] instance=ExtResource("2_haeiw")]
+visibility_layer = 2
+position = Vector2(0, 50)
+
+[node name="WallDown" parent="." groups=["Wall"] instance=ExtResource("2_haeiw")]
+position = Vector2(0, 596)
+
+[node name="Ball" parent="." groups=["Ball"] instance=ExtResource("3_haeiw")]
+position = Vector2(576, 324)
+
+[node name="LeftLoseArea" parent="." instance=ExtResource("4_b5kf5")]
+position = Vector2(10, 11)
+IsLeft = true
+
+[node name="RightLoseArea" parent="." instance=ExtResource("4_b5kf5")]
+position = Vector2(1162, 10)
+
+[node name="Player1" parent="." instance=ExtResource("6_i2arf")]
+position = Vector2(40, 317)
+
+[node name="UI" parent="." instance=ExtResource("6_1kil2")]
+
+[node name="Opponent" parent="." node_paths=PackedStringArray("Ball") groups=["Opponent"] instance=ExtResource("7_1kil2")]
+position = Vector2(1107, 317)
+Ball = NodePath("../Ball")

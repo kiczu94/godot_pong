@@ -1,0 +1,61 @@
+[gd_scene load_steps=5 format=3 uid="uid://dyq7l7xoglyix"]
+
+[ext_resource type="PackedScene" uid="uid://ce7mmlbrhlvla" path="res://Levels/GameLevel/Board.tscn" id="1_mag12"]
+[ext_resource type="Script" uid="uid://1uli4r6kupio" path="res://Levels/MainMenuLevel/Scripts/NewGameButton.cs" id="2_6r0xx"]
+[ext_resource type="Script" uid="uid://gqisf37sv3rq" path="res://Levels/MainMenuLevel/QuitGameButton.cs" id="3_rn3ee"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_c3jq2"]
+font_size = 30
+
+[node name="MainMenu" type="Node2D"]
+
+[node name="Background" parent="." instance=ExtResource("1_mag12")]
+scroll_offset = Vector2(-3, 0)
+
+[node name="Title" type="Label" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 427.0
+offset_top = 61.0
+offset_right = 724.0
+offset_bottom = 162.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "Pong made for
+20 games challenge"
+label_settings = SubResource("LabelSettings_c3jq2")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NewGameButton" type="Button" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = 529.0
+offset_top = 211.0
+offset_right = 624.0
+offset_bottom = 270.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+text = "NEW GAME"
+script = ExtResource("2_6r0xx")
+metadata/_edit_use_anchors_ = true
+
+[node name="QuitGameButton" type="Button" parent="."]
+offset_left = 525.0
+offset_top = 298.0
+offset_right = 628.0
+offset_bottom = 359.0
+text = "QUIT GAME"
+script = ExtResource("3_rn3ee")
+
+[connection signal="button_down" from="NewGameButton" to="NewGameButton" method="OnButtonDown"]
+[connection signal="button_down" from="QuitGameButton" to="QuitGameButton" method="OnButtonDown"]

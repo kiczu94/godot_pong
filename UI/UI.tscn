@@ -1,0 +1,84 @@
+[gd_scene load_steps=8 format=3 uid="uid://blaq6c0hno86p"]
+
+[ext_resource type="Script" uid="uid://bx7bixrbwwxx6" path="res://UI/ScoreLabel.cs" id="1_qui0h"]
+[ext_resource type="Script" uid="uid://bhbd7jvxoqvys" path="res://UI/RestartLabel.cs" id="2_vrfts"]
+[ext_resource type="Script" uid="uid://b2gpccggt8x7o" path="res://UI/TimerLabel.cs" id="3_0mc3e"]
+[ext_resource type="Script" uid="uid://c0ivysp3qceav" path="res://UI/GameOverLabel.cs" id="4_2n5f6"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_i2arf"]
+font_size = 30
+
+[sub_resource type="LabelSettings" id="LabelSettings_ed8b8"]
+font_size = 48
+
+[sub_resource type="LabelSettings" id="LabelSettings_l6ya2"]
+font_size = 32
+
+[node name="UI" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 547.0
+offset_right = 587.0
+offset_bottom = 40.0
+
+[node name="ScoreLabel" type="Label" parent="."]
+offset_right = 58.0
+offset_bottom = 58.0
+size_flags_horizontal = 4
+text = "0 : 0"
+label_settings = SubResource("LabelSettings_i2arf")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("1_qui0h")
+
+[node name="RestartLabel" type="Label" parent="."]
+visible = false
+offset_left = -23.0
+offset_top = 149.0
+offset_right = 84.0
+offset_bottom = 204.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "Press Space
+ to restart"
+script = ExtResource("2_vrfts")
+
+[node name="TimerLabel" type="Label" parent="."]
+visible = false
+custom_minimum_size = Vector2(10, 0)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -25.0
+offset_top = 164.0
+offset_right = 40.0
+offset_bottom = 231.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+text = "1"
+label_settings = SubResource("LabelSettings_ed8b8")
+horizontal_alignment = 1
+script = ExtResource("3_0mc3e")
+
+[node name="GameOverLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -400.0
+offset_top = 167.0
+offset_right = 460.0
+offset_bottom = 325.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "GAME OVER 
+PLAYER 1 WON"
+label_settings = SubResource("LabelSettings_l6ya2")
+horizontal_alignment = 1
+vertical_alignment = 1
+script = ExtResource("4_2n5f6")
