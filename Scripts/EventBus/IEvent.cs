@@ -1,4 +1,3 @@
-
-namespace pong_1.Scripts.EventBus;
+namespace Pong_1.Scripts.EventBus;
 
 public interface IEvent{}

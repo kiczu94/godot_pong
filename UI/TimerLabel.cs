@@ -1,5 +1,5 @@
 using Godot;
-using pong_1.Scripts.EventBus;
+using Pong_1.Scripts.EventBus;
 using Pong_1.Scripts.Events;
 using System.Threading.Tasks;
 
@@ -13,11 +13,11 @@ public partial class TimerLabel : Label
 
     public override void _Ready()
     {
+        Visible = false;
         restartPointEventBinding = new EventBinding<RestartPointEvent>(OnRestartPointEvent);
         changeVisibleTimerValueEventBinding = new EventBinding<ChangeVisibleTimerValueEvent>(OnChangeVisibleTimerValueEvent);
         EventBus<RestartPointEvent>.Register(restartPointEventBinding);
         EventBus<ChangeVisibleTimerValueEvent>.Register(changeVisibleTimerValueEventBinding);
-        Visible = false;
         base._Ready();
     }
 
@@ -48,5 +48,12 @@ public partial class TimerLabel : Label
         {
             EventBus<ChangeVisibleTimerValueEvent>.Raise(new ChangeVisibleTimerValueEvent());
         }
+    }
+
+    public override void _ExitTree()
+    {
+        EventBus<RestartPointEvent>.Unregister(restartPointEventBinding);
+        EventBus<ChangeVisibleTimerValueEvent>.Unregister(changeVisibleTimerValueEventBinding);
+        base._ExitTree();
     }
 }

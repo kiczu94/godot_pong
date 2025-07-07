@@ -1,6 +1,6 @@
 using System;
 
-namespace pong_1.Scripts.Utilities
+namespace Pong_1.Scripts.Utilities
 {
     public static class RandomGenerator<T>
     {

@@ -1,4 +1,3 @@
-
 using Godot;
 
 namespace Pong_1.Scripts.Utilities;

@@ -1,5 +1,5 @@
 using Godot;
-using pong_1.Scripts.EventBus;
+using Pong_1.Scripts.EventBus;
 using Pong_1.Scripts.Events;
 
 public partial class GameOverLabel : Label
@@ -28,4 +28,9 @@ public partial class GameOverLabel : Label
         Visible = true;
     }
 
+    public override void _ExitTree()
+    {
+        EventBus<GameFinishedEvent>.Unregister(gameFinishedEventBinding);
+        base._ExitTree();
+    }
 }

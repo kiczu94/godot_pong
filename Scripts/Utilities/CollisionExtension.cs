@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using Godot;
 
-namespace pong_1.Scripts.Utilities;
+namespace Pong_1.Scripts.Utilities;
 
 public static class CollisionExtensions
 {

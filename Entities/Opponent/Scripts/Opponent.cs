@@ -1,6 +1,5 @@
 using Godot;
-using pong_1.Scripts.EventBus;
-using pong_1.Scripts.Events;
+using Pong_1.Scripts.EventBus;
 using Pong_1.Scripts.Events;
 using Pong_1.Scripts.Utilities;
 using System.Threading.Tasks;
@@ -95,5 +94,13 @@ public partial class Opponent : CharacterBody2D
     private void OnRestartPointEvent()
     {
         Position = new Vector2(1107, 317);
+    }
+
+    public override void _ExitTree()
+    {
+        EventBus<BallHitLoseAreaEvent>.Unregister(ballHitLoseAreaEventBinding);
+        EventBus<StartGameEvent>.Unregister(startGameEventBinding);
+        EventBus<RestartPointEvent>.Unregister(restartPointEventBinding);
+        base._ExitTree();
     }
 }

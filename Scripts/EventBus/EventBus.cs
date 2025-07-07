@@ -1,8 +1,7 @@
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Godot;
+using System.Collections.Generic;
 
-namespace pong_1.Scripts.EventBus;
+namespace Pong_1.Scripts.EventBus;
 
 public class EventBus<T> where T : IEvent
 {

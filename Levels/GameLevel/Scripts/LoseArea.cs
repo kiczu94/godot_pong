@@ -1,6 +1,6 @@
 using Godot;
-using pong_1.Scripts.EventBus;
-using pong_1.Scripts.Events;
+using Pong_1.Scripts.EventBus;
+using Pong_1.Scripts.Events;
 
 public partial class LoseArea : Area2D
 {

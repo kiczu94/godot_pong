@@ -1,8 +1,7 @@
 using Godot;
-using pong_1.Scripts.EventBus;
-using pong_1.Scripts.Events;
-using pong_1.Scripts.Utilities;
+using Pong_1.Scripts.EventBus;
 using Pong_1.Scripts.Events;
+using Pong_1.Scripts.Utilities;
 using System.Linq;
 
 public partial class Ball : CharacterBody2D
@@ -46,14 +45,14 @@ public partial class Ball : CharacterBody2D
     private void SetBindings()
     {
         ballHitWallEventBinding = new EventBinding<BallHitWallEvent>(OnBallHitWallEvent);
-        EventBus<BallHitWallEvent>.Register(ballHitWallEventBinding);
         ballHitLoseAreaEventBinding = new EventBinding<BallHitLoseAreaEvent>(OnBallHitLoseAreaEvent);
-        EventBus<BallHitLoseAreaEvent>.Register(ballHitLoseAreaEventBinding);
-        ballHitPlayerEventBinding = new EventBinding<BallHitPlayerEvent>(OnBallHitPlayerEvent);
-        EventBus<BallHitPlayerEvent>.Register(ballHitPlayerEventBinding);
-        startGameEventBinding = new EventBinding<StartGameEvent>(OnStartGameEvent);
-        EventBus<StartGameEvent>.Register(startGameEventBinding);
         restartPointEventBinding = new EventBinding<RestartPointEvent>(OnRestartPointEvent);
+        ballHitPlayerEventBinding = new EventBinding<BallHitPlayerEvent>(OnBallHitPlayerEvent);
+        startGameEventBinding = new EventBinding<StartGameEvent>(OnStartGameEvent);
+        EventBus<BallHitPlayerEvent>.Register(ballHitPlayerEventBinding);
+        EventBus<BallHitLoseAreaEvent>.Register(ballHitLoseAreaEventBinding);
+        EventBus<StartGameEvent>.Register(startGameEventBinding);
+        EventBus<BallHitWallEvent>.Register(ballHitWallEventBinding);
         EventBus<RestartPointEvent>.Register(restartPointEventBinding);
     }
 
@@ -180,5 +179,15 @@ public partial class Ball : CharacterBody2D
         directionX *= -1;
         angle = reflectionAngle;
         directionY = newYDirection;
+    }
+
+    public override void _ExitTree()
+    {
+        EventBus<BallHitPlayerEvent>.Unregister(ballHitPlayerEventBinding);
+        EventBus<BallHitLoseAreaEvent>.Unregister(ballHitLoseAreaEventBinding);
+        EventBus<StartGameEvent>.Unregister(startGameEventBinding);
+        EventBus<BallHitWallEvent>.Unregister(ballHitWallEventBinding);
+        EventBus<RestartPointEvent>.Unregister(restartPointEventBinding);
+        base._ExitTree();
     }
 }

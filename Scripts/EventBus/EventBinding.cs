@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 
-namespace pong_1.Scripts.EventBus;
+namespace Pong_1.Scripts.EventBus;
 
 public interface IEventBinding<T>
 {

@@ -1,6 +1,5 @@
 using Godot;
-using pong_1.Scripts.EventBus;
-using pong_1.Scripts.Events;
+using Pong_1.Scripts.EventBus;
 using Pong_1.Scripts.Events;
 
 public partial class ScoreLabel : Label
@@ -24,7 +23,6 @@ public partial class ScoreLabel : Label
         base._Process(delta);
     }
 
-
     private void OnBallHitLoseAreEvent(BallHitLoseAreaEvent @event)
     {
         if (@event.leftArea) Player2Score += 1;
@@ -37,5 +35,11 @@ public partial class ScoreLabel : Label
         {
             EventBus<StopGameEvent>.Raise(new StopGameEvent());
         }
+    }
+
+    public override void _ExitTree()
+    {
+        EventBus<BallHitLoseAreaEvent>.Unregister(ballHitLoseAreaEventBinding);
+        base._ExitTree();
     }
 }

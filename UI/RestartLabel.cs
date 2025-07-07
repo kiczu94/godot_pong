@@ -1,6 +1,5 @@
 using Godot;
-using pong_1.Scripts.EventBus;
-using pong_1.Scripts.Events;
+using Pong_1.Scripts.EventBus;
 using Pong_1.Scripts.Events;
 
 public partial class RestartLabel : Label
@@ -11,8 +10,8 @@ public partial class RestartLabel : Label
     public override void _Ready()
     {
         StopGameEventBinding = new EventBinding<StopGameEvent>(OnStopGameEvent);
-        EventBus<StopGameEvent>.Register(StopGameEventBinding);
         restartPointEventBinding = new EventBinding<RestartPointEvent>(OnRestartPointEventBinding);
+        EventBus<StopGameEvent>.Register(StopGameEventBinding);
         EventBus<RestartPointEvent>.Register(restartPointEventBinding);
         base._Ready();
     }
@@ -32,5 +31,12 @@ public partial class RestartLabel : Label
     private void OnRestartPointEventBinding()
     {
         Visible = false;
+    }
+
+    public override void _ExitTree()
+    {
+        EventBus<StopGameEvent>.Unregister(StopGameEventBinding);
+        EventBus<RestartPointEvent>.Unregister(restartPointEventBinding);
+        base._ExitTree();
     }
 }

@@ -1,6 +1,5 @@
 using Godot;
-using pong_1.Scripts.EventBus;
-using pong_1.Scripts.Events;
+using Pong_1.Scripts.EventBus;
 using Pong_1.Scripts.Events;
 using Pong_1.Scripts.Utilities;
 
@@ -33,6 +32,15 @@ public partial class Player : CharacterBody2D
         EventBus<StartGameEvent>.Register(startGameEventBinding);
         EventBus<RestartPointEvent>.Register(restartPointEventBinding);
         base._Ready();
+    }
+
+    public override void _Process(double delta)
+    {
+        if (Input.IsKeyPressed(Key.Escape))
+        {
+            SceneManager.ChangeScene("res://Levels/MainMenuLevel/MainMenu.tscn");
+        }
+        base._Process(delta);
     }
 
     public override void _PhysicsProcess(double delta)
@@ -73,5 +81,13 @@ public partial class Player : CharacterBody2D
         }
 
         return Vector2.Zero;
+    }
+
+    public override void _ExitTree()
+    {
+        EventBus<BallHitLoseAreaEvent>.Unregister(ballHitLoseAreaEventBinding);
+        EventBus<StartGameEvent>.Unregister(startGameEventBinding);
+        EventBus<RestartPointEvent>.Unregister(restartPointEventBinding);
+        base._ExitTree();
     }
 }

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Godot;
 
-namespace pong_1.Scripts.EventBus;
+namespace Pong_1.Scripts.EventBus;
 
 [GlobalClass]
 public partial class EventBusLoader : Node
