@@ -1,9 +1,9 @@
 [gd_scene load_steps=8 format=3 uid="uid://blaq6c0hno86p"]
 
-[ext_resource type="Script" uid="uid://bx7bixrbwwxx6" path="res://UI/ScoreLabel.cs" id="1_qui0h"]
-[ext_resource type="Script" uid="uid://bhbd7jvxoqvys" path="res://UI/RestartLabel.cs" id="2_vrfts"]
-[ext_resource type="Script" uid="uid://b2gpccggt8x7o" path="res://UI/TimerLabel.cs" id="3_0mc3e"]
-[ext_resource type="Script" uid="uid://c0ivysp3qceav" path="res://UI/GameOverLabel.cs" id="4_2n5f6"]
+[ext_resource type="Script" uid="uid://bx7bixrbwwxx6" path="res://UI/Scripts/ScoreLabel.cs" id="1_qui0h"]
+[ext_resource type="Script" uid="uid://bhbd7jvxoqvys" path="res://UI/Scripts/RestartLabel.cs" id="2_vrfts"]
+[ext_resource type="Script" uid="uid://b2gpccggt8x7o" path="res://UI/Scripts/TimerLabel.cs" id="3_0mc3e"]
+[ext_resource type="Script" uid="uid://c0ivysp3qceav" path="res://UI/Scripts/GameOverLabel.cs" id="4_2n5f6"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_i2arf"]
 font_size = 30
@@ -22,6 +22,7 @@ offset_right = 587.0
 offset_bottom = 40.0
 
 [node name="ScoreLabel" type="Label" parent="."]
+layout_mode = 0
 offset_right = 58.0
 offset_bottom = 58.0
 size_flags_horizontal = 4
@@ -33,6 +34,7 @@ script = ExtResource("1_qui0h")
 
 [node name="RestartLabel" type="Label" parent="."]
 visible = false
+layout_mode = 0
 offset_left = -23.0
 offset_top = 149.0
 offset_right = 84.0

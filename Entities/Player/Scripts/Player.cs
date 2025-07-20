@@ -45,9 +45,9 @@ public partial class Player : CharacterBody2D
 
     public override void _PhysicsProcess(double delta)
     {
-        Velocity = GetPlayerVelocity();
+        Velocity = GetPlayerVelocity((float)delta);
 
-        MoveAndSlide();
+        MoveAndCollide(Velocity);
 
         base._PhysicsProcess(delta);
     }
@@ -69,15 +69,15 @@ public partial class Player : CharacterBody2D
         Position = new Vector2(40, 317);
     }
 
-    public Vector2 GetPlayerVelocity()
+    public Vector2 GetPlayerVelocity(float delta)
     {
         if (Input.IsKeyPressed(Key.S))
         {
-            return new Vector2(0, Speed);
+            return new Vector2(0, Speed * delta);
         }
         if (Input.IsKeyPressed(Key.W))
         {
-            return new Vector2(0, -Speed);
+            return new Vector2(0, -Speed * delta);
         }
 
         return Vector2.Zero;

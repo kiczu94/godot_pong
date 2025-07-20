@@ -19,6 +19,7 @@ public partial class Ball : CharacterBody2D
 
     private float _speed;
 
+
     private EventBinding<BallHitWallEvent> ballHitWallEventBinding;
 
     private EventBinding<BallHitLoseAreaEvent> ballHitLoseAreaEventBinding;
@@ -38,8 +39,9 @@ public partial class Ball : CharacterBody2D
 
     public override void _PhysicsProcess(double delta)
     {
+        var startBallPosition = new Vector2(Position.X, Position.Y);
         ProcessMovement();
-        ProcessCollision(MoveAndCollide(Velocity * (float)delta));
+        ProcessCollision(MoveAndCollide(Velocity * (float)delta), startBallPosition);
     }
 
     private void SetBindings()
@@ -74,7 +76,7 @@ public partial class Ball : CharacterBody2D
         Velocity = new Vector2(_speed * directionX, _speed * directionY) * Vector2.FromAngle(angle);
     }
 
-    private void ProcessCollision(KinematicCollision2D collision2D)
+    private void ProcessCollision(KinematicCollision2D collision2D, Vector2 ballPosition)
     {
         if (collision2D == null)
         {
@@ -85,7 +87,7 @@ public partial class Ball : CharacterBody2D
 
         if (colliderGroup == "Wall")
         {
-            EventBus<BallHitWallEvent>.Raise(new BallHitWallEvent(Velocity));
+            EventBus<BallHitWallEvent>.Raise(new BallHitWallEvent(Velocity, ballPosition));
         }
 
         if (colliderGroup == "Player")

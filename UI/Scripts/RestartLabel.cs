@@ -4,14 +4,14 @@ using Pong_1.Scripts.Events;
 
 public partial class RestartLabel : Label
 {
-    EventBinding<StopGameEvent> StopGameEventBinding;
+    EventBinding<StopGameEvent> stopGameEventBinding;
     EventBinding<RestartPointEvent> restartPointEventBinding;
 
     public override void _Ready()
     {
-        StopGameEventBinding = new EventBinding<StopGameEvent>(OnStopGameEvent);
+        stopGameEventBinding = new EventBinding<StopGameEvent>(OnStopGameEvent);
         restartPointEventBinding = new EventBinding<RestartPointEvent>(OnRestartPointEventBinding);
-        EventBus<StopGameEvent>.Register(StopGameEventBinding);
+        EventBus<StopGameEvent>.Register(stopGameEventBinding);
         EventBus<RestartPointEvent>.Register(restartPointEventBinding);
         base._Ready();
     }
@@ -35,7 +35,7 @@ public partial class RestartLabel : Label
 
     public override void _ExitTree()
     {
-        EventBus<StopGameEvent>.Unregister(StopGameEventBinding);
+        EventBus<StopGameEvent>.Unregister(stopGameEventBinding);
         EventBus<RestartPointEvent>.Unregister(restartPointEventBinding);
         base._ExitTree();
     }

@@ -4,6 +4,7 @@ using Pong_1.Scripts.Events;
 
 public partial class GameOverLabel : Label
 {
+    AudioStreamWav player1Won;
     EventBinding<GameFinishedEvent> gameFinishedEventBinding;
 
     public override void _Ready()

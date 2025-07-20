@@ -27,9 +27,9 @@ public partial class ScoreLabel : Label
     {
         if (@event.leftArea) Player2Score += 1;
         else Player1Score += 1;
-        if (Player1Score == 10 || Player2Score == 10)
+        if (Player1Score == 2 || Player2Score == 2)
         {
-            EventBus<GameFinishedEvent>.Raise(new GameFinishedEvent(Player1Score == 10 ? true : false));
+            EventBus<GameFinishedEvent>.Raise(new GameFinishedEvent(Player1Score == 3 ? true : false));
         }
         else
         {

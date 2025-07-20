@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bm8w2rafydx18"]
+[gd_scene load_steps=10 format=3 uid="uid://bm8w2rafydx18"]
 
 [ext_resource type="PackedScene" uid="uid://ce7mmlbrhlvla" path="res://Levels/GameLevel/Board.tscn" id="1_hvuor"]
 [ext_resource type="PackedScene" uid="uid://naepir5mexdi" path="res://Entities/Wall/Wall.tscn" id="2_haeiw"]
@@ -7,6 +7,8 @@
 [ext_resource type="PackedScene" uid="uid://blaq6c0hno86p" path="res://UI/UI.tscn" id="6_1kil2"]
 [ext_resource type="PackedScene" uid="uid://dag8pocn63nfn" path="res://Entities/Player/Player.tscn" id="6_i2arf"]
 [ext_resource type="PackedScene" uid="uid://vr05p2h8eunt" path="res://Entities/Opponent/Opponent.tscn" id="7_1kil2"]
+[ext_resource type="Script" uid="uid://bwpewvxma7jki" path="res://Levels/GameLevel/GameLevelAudioStreamPlayer.cs" id="8_kjyni"]
+[ext_resource type="Script" uid="uid://dbh46tiy1l4lk" path="res://Levels/GameLevel/ImpactWaveSpawner.cs" id="9_yksj3"]
 
 [node name="GameScene" type="Node2D"]
 
@@ -38,3 +40,9 @@ position = Vector2(40, 317)
 [node name="Opponent" parent="." node_paths=PackedStringArray("Ball") groups=["Opponent"] instance=ExtResource("7_1kil2")]
 position = Vector2(1107, 317)
 Ball = NodePath("../Ball")
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+script = ExtResource("8_kjyni")
+
+[node name="ImpactWaveSpawner" type="Node" parent="."]
+script = ExtResource("9_yksj3")
