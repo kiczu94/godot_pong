@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://bm8w2rafydx18"]
+[gd_scene load_steps=11 format=3 uid="uid://bm8w2rafydx18"]
 
 [ext_resource type="PackedScene" uid="uid://ce7mmlbrhlvla" path="res://Levels/GameLevel/Board.tscn" id="1_hvuor"]
 [ext_resource type="PackedScene" uid="uid://naepir5mexdi" path="res://Entities/Wall/Wall.tscn" id="2_haeiw"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://vr05p2h8eunt" path="res://Entities/Opponent/Opponent.tscn" id="7_1kil2"]
 [ext_resource type="Script" uid="uid://bwpewvxma7jki" path="res://Levels/GameLevel/GameLevelAudioStreamPlayer.cs" id="8_kjyni"]
 [ext_resource type="Script" uid="uid://dbh46tiy1l4lk" path="res://Levels/GameLevel/ImpactWaveSpawner.cs" id="9_yksj3"]
+[ext_resource type="Texture2D" uid="uid://c1alsgvx0gu7c" path="res://Levels/GameLevel/Sprites/Background.png" id="10_5q4pp"]
 
 [node name="GameScene" type="Node2D"]
 
@@ -17,9 +18,11 @@ ShowDividers = true
 
 [node name="WallUp" parent="." groups=["Wall"] instance=ExtResource("2_haeiw")]
 visibility_layer = 2
+z_index = 1
 position = Vector2(0, 50)
 
 [node name="WallDown" parent="." groups=["Wall"] instance=ExtResource("2_haeiw")]
+z_index = 1
 position = Vector2(0, 596)
 
 [node name="Ball" parent="." groups=["Ball"] instance=ExtResource("3_haeiw")]
@@ -33,11 +36,14 @@ IsLeft = true
 position = Vector2(1162, 10)
 
 [node name="Player1" parent="." instance=ExtResource("6_i2arf")]
+z_index = 1
 position = Vector2(40, 317)
 
 [node name="UI" parent="." instance=ExtResource("6_1kil2")]
+z_index = 2
 
 [node name="Opponent" parent="." node_paths=PackedStringArray("Ball") groups=["Opponent"] instance=ExtResource("7_1kil2")]
+z_index = 1
 position = Vector2(1107, 317)
 Ball = NodePath("../Ball")
 
@@ -46,3 +52,16 @@ script = ExtResource("8_kjyni")
 
 [node name="ImpactWaveSpawner" type="Node" parent="."]
 script = ExtResource("9_yksj3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+z_index = 1
+position = Vector2(574, 672)
+scale = Vector2(1.33257, 0.106414)
+texture = ExtResource("10_5q4pp")
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+visibility_layer = 8
+z_index = 1
+position = Vector2(577.5, 26.5001)
+scale = Vector2(1.32451, 0.0342566)
+texture = ExtResource("10_5q4pp")
